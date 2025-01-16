@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOGO Selector</title>
+    <style>
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        /* Header styles */
+        .header {
+            text-align: center;
+            color: #FF4D8D;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .bogo-header {
+    position: relative;
+    text-align: center;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.bogo-header__text {
+    color: #FF4D8D;
+    font-size: 20px;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0 15px;
+    background: white;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.bogo-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: black;
+    z-index: 0;
+}
+        .option-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .option-box.selected {
+            border-color: #FF4D8D;
+        }
+
+        .option-box.popular {
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FF4D8D;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+        }
+
+        .option-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .radio-input {
+            width: 1rem;
+            height: 1rem;
+            accent-color: #FF4D8D;
+        }
+
+        .unit-text {
+            font-weight: 500;
+        }
+
+        .discount-badge {
+            background-color: #FF4D8D;
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .price-info {
+            text-align: right;
+        }
+
+        .current-price {
+            font-weight: 500;
+        }
+
+        .original-price {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Variant selector styles */
+        .variant-selector {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .variant-selector.visible {
+            display: block;
+        }
+
+        .variant-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .variant-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .variant-number {
+            width: 2rem;
+        }
+
+        .variant-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .variant-select {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            min-width: 5rem;
+        }
+
+        /* Footer styles */
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .delivery-text {
+            color: #FF4D8D;
+        }
+
+        .cart-button {
+            width: 100%;
+            background-color: #FF4D8D;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cart-button:hover {
+            background-color: #ff3377;
+        }
+
+        .powered-by {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bogo-header">
+            <h1 class="bogo-header__text">YAY! It's BOGO</h1>
+        </div>
+        
+    
+        <div class="option-box" data-option="1">
+            <div class="option-header">
+                <div class="option-left">
+                    <input type="radio" name="option" class="radio-input" value="1">
+                    <span class="unit-text">1 Unit</span>
+                    <span class="discount-badge">10% Off</span>
+                </div>
+                <div class="price-info">
+                    <div class="current-price">$10.00 USD</div>
+                    <div class="original-price">$24.00 USD</div>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="option-box popular" data-option="2">
+            <div class="popular-badge">MOST POPULAR</div>
+            <div class="option-header">
+                <div class="option-left">
+                    <input type="radio" name="option" class="radio-input" value="2">
+                    <span class="unit-text">2 Unit</span>
+                    <span class="discount-badge">20% Off</span>
+                </div>
+                <div class="price-info">
+                    <div class="current-price">$18.00 USD</div>
+                    <div class="original-price">$24.00 USD</div>
+                </div>
+            </div>
+            <div class="variant-selector" id="variantSelector">
+                <div class="variant-row">
+                    <div class="variant-number">#1</div>
+                    <div class="variant-options">
+                        <select class="variant-select">
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                        </select>
+                        <select class="variant-select">
+                            <option value="">Colour</option>
+                            <option>Black</option>
+                            <option>White</option>
+                            <option>Blue</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="variant-row">
+                    <div class="variant-number">#2</div>
+                    <div class="variant-options">
+                        <select class="variant-select">
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                        </select>
+                        <select class="variant-select">
+                            <option value="">Colour</option>
+                            <option>Black</option>
+                            <option>White</option>
+                            <option>Blue</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+        <div class="option-box" data-option="3">
+            <div class="option-header">
+                <div class="option-left">
+                    <input type="radio" name="option" class="radio-input" value="3">
+                    <span class="unit-text">3 Unit</span>
+                    <span class="discount-badge">30% Off</span>
+                </div>
+                <div class="price-info">
+                    <div class="current-price">$24.00 USD</div>
+                    <div class="original-price">$24.00 USD</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <span class="delivery-text">Free Delivery</span>
+            <span>Total : $18.00 USD</span>
+        </div>
+
+        <button class="cart-button">Add to Cart</button>
+        <div class="powered-by">@ Powered by Pumper</div>
+    </div>
+
+    <script>
+        
+        const optionBoxes = document.querySelectorAll('.option-box');
+        const variantSelector = document.getElementById('variantSelector');
+
+        
+        optionBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+          
+                const radio = box.querySelector('.radio-input');
+                radio.checked = true;
+
+               
+                optionBoxes.forEach(b => b.classList.remove('selected'));
+                box.classList.add('selected');
+
+               
+                if (box.dataset.option === '2') {
+                    variantSelector.classList.add('visible');
+                } else {
+                    variantSelector.classList.remove('visible');
+                }
+            });
+        });
+
+      
+        const defaultOption = document.querySelector('[data-option="2"]');
+        defaultOption.click();
+    </script>
+</body>
+</html>
